@@ -30,7 +30,7 @@ def handle_data():
         if (ans):
             response = {"response": resp2, "status": False, "non-lexicon":True}
             return jsonify(response)
-        response = {"response":resp1, "status": True, "non-lexicon":False}
+        response = {"response": "Видео не содержит негативного контента", "status": False, "non-lexicon":False}
         return jsonify(response)
     else: 
         pass
