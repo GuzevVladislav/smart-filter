@@ -43,8 +43,7 @@
         }
         form {
             margin: auto;
-            max-width: 40em;
-            /*position: relative;*/
+            max-width: 30em;
             width: calc(100% - 3em);
         }
         .border_form {
@@ -55,6 +54,14 @@
 
 
 
+        /*input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, {
+            border: 1px solid green;
+            -webkit-text-fill-color: green;
+            -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }*/
         input[type="text"] {
             width: 100%;
             height: 8vh;
@@ -63,6 +70,12 @@
             background-color: hsl(var(--hue), 10%, 50%, 0.2);
             padding: 0 2em; 
             font-size: 1em;
+            box-shadow: 0 0 0 30px #192542 inset !important;
+            /*-webkit-text-fill-color: #fff;*/
+            color: #fff;
+        }
+        input[type="text"]:focus-visible {
+            -webkit-text-fill-color: #fff;
         }
 
 
@@ -82,8 +95,6 @@
             height: 10vh;
         }
         .border_label {
-            width: 33.333%;
-            height: 25vh;
             display: flex;
             justify-content: center;
             position: relative;
@@ -116,9 +127,11 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 33.333%;
-            height: 25vh;
             transition: transform var(--trans-dur) var(--trans-timing);
+        }
+        .selection, .border_label {
+            width: 50%;
+            height: 20vh;
         }
         label:has(input[type="radio"]:checked) ~ .selection {
             animation: fade-in var(--trans-dur) var(--trans-timing);
@@ -158,7 +171,7 @@
             color: var(--trans-dur);
         }
         #sendRequest {
-            margin-top: 1.5em;
+            margin-top: 2em;
         }
         h2 {
             font-size: 1.2em;
@@ -193,7 +206,7 @@
             }
             .selection, .border_label {
                 width: 100%;
-                height: 18vh;
+                height: 14vh;
             }
             h2 {
                 margin: 0.5em 0;
@@ -244,6 +257,7 @@
             appearance: none;
             -webkit-tap-highlight-color: transparent;
             color: #fff;
+            margin-left: 1em;
         }
         .timeline__arrow:focus-visible,
         .timeline__arrow:hover {
@@ -303,16 +317,19 @@
         }
         .timeline__item-body--expanded .timeline__item-body-content {
             opacity: 1;
+            font-size: 0.8em;
             visibility: visible;
             transition-delay: var(--trans-dur), 0s;
         }
         .timeline__arrow[aria-expanded="true"] .timeline__arrow-icon {
             transform: rotate(0);
         }
+        .bold_span {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <!-- <input type="text" id="age" placeholder="age"><br> -->
 
     <main>
     <form onsubmit="return false;">
@@ -325,34 +342,19 @@
             <h2 class="category_title">Выберете категорию фильтра</h2>
             <div class="border_form">
                 <label class="border_label">
-                    <input type="radio" name="inventor" value="6" required>
-                    <div class="truncate">
-                        <h3 class="border_label_title">6+</h3>
-                        <div class="border_label_description">Фильтр ненормативной лексики</div>
-                        <div class="border_label_description">Фильтр эротического контента</div>
-                        <div class="border_label_description">Фильтр табачных изделий</div>
-                        <div class="border_label_description">Фильтр дискриминации</div>
-                        <div class="border_label_description">Описание фильтра 6+</div>
-                    </div>
-                </label>
-                <label class="border_label">
-                    <input type="radio" name="inventor" value="12" required>
+                    <input type="radio" name="inventor" value="12" id="b1" required>
                     <div class="truncate">
                         <h3 class="border_label_title">12+</h3>
-                        <div class="border_label_description">Фильтр ненормативной лексики</div>
-                        <div class="border_label_description">Фильтр эротического контента</div>
+                        <div class="border_label_description">Фильтр недопустимых слов</div>
                         <div class="border_label_description">Фильтр табачных изделий</div>
-                        <div class="border_label_description">Фильтр дискриминации</div>
                     </div>
                 </label>
                 <label class="border_label">
-                    <input type="radio" name="inventor" value="16" required>
+                    <input type="radio" name="inventor" value="16" id="b2" required>
                     <div class="truncate">
                         <h3 class="border_label_title">16+</h3>
                         <div class="border_label_description_block">
-                            <div class="border_label_description">Фильтр эротического контента</div>
                             <div class="border_label_description">Фильтр табачных изделий</div>
-                            <div class="border_label_description">Фильтр дискриминации</div>
                         </div>
                     </div>
                 </label>
@@ -369,52 +371,22 @@
         <polyline points="7 10,12 15,17 10" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
     </symbol>
 </svg>
-<h2>Результаты анализа видео</h2>
-<div id="timeline" class="timeline">
-    <div class="timeline__item">
-        <div class="timeline__item-header">
-            <span class="timeline__dot"></span>
-            <span id="item1-name" class="timeline__meta">
-                <strong class="timeline__title">Недопустимые слова</strong>
-            </span>
-            <button class="timeline__arrow" type="button" id="item1" aria-labelledby="item1-name" aria-expanded="false" aria-controls="item1-ctrld" aria-haspopup="true" data-item="1">
-                <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                    <use href="#arrow" />
-                </svg>
-            </button>
-        </div>
-        <div class="timeline__item-body" id="item1-ctrld" role="region" aria-labelledby="item1" aria-hidden="true">
-            <div class="timeline__item-body-content" id="response">
-                <p class="timeline__item-p"></p>
-            </div>
-        </div>
-    </div>
-    <div class="timeline__item">
-        <div class="timeline__item-header">
-            <span class="timeline__dot"></span>
-            <span id="item2-name" class="timeline__meta">
-                <strong class="timeline__title">Недопустимые изображения</strong>
-            </span>
-            <button class="timeline__arrow" type="button" id="item2" aria-labelledby="item2-name" aria-expanded="false" aria-controls="item2-ctrld" aria-haspopup="true" data-item="2">
-                <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                    <use href="#arrow" />
-                </svg>
-            </button>
-        </div>
-        <div class="timeline__item-body" id="item2-ctrld" role="region" aria-labelledby="item2" aria-hidden="true">
-            <div class="timeline__item-body-content">
-                <p class="timeline__item-p">At 6:36:57 PM UTC, the date in ISO 8601 format (1973-10-17) within the time digits (119731017) appeared for the first time.</p>
-            </div>
-        </div>
-    </div>
+
+<h2 id="analyze_title"></h2>
+<div id="timeline" class="timeline"></div>
     
-</div>
 
 
 
 
     <script>
         document.getElementById('sendRequest').addEventListener('click', () => {
+            const tagElement = document.getElementById('timeline');
+            const analyzeTitle = document.getElementById('analyze_title');
+
+            analyzeTitle.innerHTML = 'Загрузка...';
+            document.getElementById('timeline').innerHTML = ""
+
             fetch('/api/data', {
                 method: 'POST',
                 headers: {
@@ -422,9 +394,9 @@
                 },
                 body: JSON.stringify({ 
                     link: document.getElementById("link").value,
-                    // getElementByName
-                    // age: document.getElementById("age").value,
+                    age: document.getElementsByName('inventor')[0].checked,
                  })
+                 
             })
             .then(response => response.json())
             .then(data => {
@@ -432,25 +404,52 @@
                 let response = ""
                 if (data['non-lexicon']){
                     for (let i = 0; i < data['response'].length; i++){
-                    response += `<p class="timeline__item-p"">${data['response'][i][0] + " - " + data['response'][i][2]}<p>`;
+                    response += `<p class="timeline__item-p"><span class="bold_span">${data['response'][i][0]}</span> - ${data['response'][i][2]}<p>`;
                     }
 
                 } else {
                     response = data['response']
                 }
-               
+                text = ""
+                if (data['non-lexicon'] && !data['status']){
+                    text = "В видео встречается недопустимый контент:"
+                    response = `<div class="timeline__item">
+                        <div class="timeline__item-header">
+                            <span id="item1-name" class="timeline__meta">
+                                <strong class="timeline__title">Недопустимые слова</strong>
+                            </span>
+                            <button class="timeline__arrow" type="button" id="item1" aria-labelledby="item1-name" aria-expanded="false" aria-controls="item1-ctrld" aria-haspopup="true" data-item="1">
+                                <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+                                    <use href="#arrow" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="timeline__item-body" id="item1-ctrld" role="region" aria-labelledby="item1" aria-hidden="true">
+                            <div class="timeline__item-body-content" id="response">
+                                <p class="timeline__item-p"">${text}<p>
+                                ${response}
+                            </div>
+                        </div>
+                    </div>`
+                } else {
+                    response = `<span id="item1-name" class="timeline__meta">
+                                <strong class="timeline__title">Недопустимые слова в название</strong>
+                            </span>`
+                }
+                
 
-                document.getElementById('response').innerHTML = JSON.stringify(response, null, 2);
+                document.getElementById('timeline').innerHTML = response
+                analyzeTitle.innerHTML = 'Результаты анализа видео';
             })
             .catch((error) => {
                 console.error('Error:', error);
-                document.getElementById('response').innerText = 'Error: ' + error;
+                document.getElementById('timeline').innerText = 'Error: ' + error;
             });
+            
         });
 
 
-
-        window.addEventListener("DOMContentLoaded",() => {
+    window.addEventListener("DOMContentLoaded",() => {
     const ctl = new CollapsibleTimeline("#timeline");
 });
 

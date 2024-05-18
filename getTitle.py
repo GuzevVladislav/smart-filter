@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 def getTitle(video_url):
+    
     def get_youtube_video_page(video_url):
         try:
             response = requests.get(video_url)
@@ -25,4 +27,6 @@ def getTitle(video_url):
         video_description = description_element['content'] if description_element else 'Описание видео не найдено'
         
         return video_title, video_description
+    
     return extract_metadata_from_page(get_youtube_video_page(video_url))
+    

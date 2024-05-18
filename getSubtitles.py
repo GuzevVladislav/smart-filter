@@ -9,12 +9,7 @@ def extract_string(input_str):
         return None
 def get_transcript(video_id, language='ru'):
     try:
-        # Получаем субтитры
         transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=[language])
-        # print()
-        # temp = ""
-        # for el in transcript:
-        #     temp += el['text']
         return transcript
     except Exception as e:
         print(f"Не удалось получить субтитры: {e}")
