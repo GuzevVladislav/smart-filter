@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,13 +70,18 @@
             background-color: hsl(var(--hue), 10%, 50%, 0.2);
             padding: 0 2em; 
             font-size: 1em;
-            box-shadow: 0 0 0 30px #192542 inset !important;
+            box-shadow: 0 0 0 100px #051F61 inset !important; /*#192542*/
             /*-webkit-text-fill-color: #fff;*/
             color: #fff;
+            outline:none;
+            border: 1px solid blue;
         }
         input[type="text"]:focus-visible {
             -webkit-text-fill-color: #fff;
         }
+        input[type="text"]:not(:focus-visible) {
+            -webkit-text-fill-color: var(--fg);
+        }*/
 
 
         label,
@@ -195,17 +200,17 @@
 
 
         @media screen and (max-width: 750px) {
-            label:nth-of-type(2):has(input[type="radio"]:checked) ~ .selection {
+            /*label:nth-of-type(2):has(input[type="radio"]:checked) ~ .selection {
                 transform: translateY(100%);
             }
             label:nth-of-type(3):has(input[type="radio"]:checked) ~ .selection {
                 transform: translateY(200%);
-            }
+            }*/
             input[type="text"] {
                 height: 6vh;
             }
             .selection, .border_label {
-                width: 100%;
+                /*width: 100%;*/
                 height: 14vh;
             }
             h2 {
@@ -342,17 +347,16 @@
             <h2 class="category_title">Выберете категорию фильтра</h2>
             <div class="border_form">
                 <label class="border_label">
-                    <input type="radio" name="inventor" value="12" id="b1" required>
+                    <input type="radio" name="inventor" value="12" id="b1" required checked>
                     <div class="truncate">
-                        <h3 class="border_label_title">12+</h3>
+                        <h3 class="border_label_title">Анализ аудио</h3>
                         <div class="border_label_description">Фильтр недопустимых слов</div>
-                        <div class="border_label_description">Фильтр табачных изделий</div>
                     </div>
                 </label>
                 <label class="border_label">
                     <input type="radio" name="inventor" value="16" id="b2" required>
                     <div class="truncate">
-                        <h3 class="border_label_title">16+</h3>
+                        <h3 class="border_label_title">Анализ видео</h3>
                         <div class="border_label_description_block">
                             <div class="border_label_description">Фильтр табачных изделий</div>
                         </div>
@@ -395,43 +399,71 @@
                 body: JSON.stringify({ 
                     link: document.getElementById("link").value,
                     age: document.getElementsByName('inventor')[0].checked,
+                    
                  })
                  
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Success:', data);
+                console.log(data['video'])
                 let response = ""
-                if (data['non-lexicon']){
-                    for (let i = 0; i < data['response'].length; i++){
-                    response += `<p class="timeline__item-p"><span class="bold_span">${data['response'][i][0]}</span> - ${data['response'][i][2]}<p>`;
-                    }
-
-                } else {
-                    response = data['response']
-                }
-                text = ""
-                if (data['non-lexicon']){
-                    text = "В видео встречается недопустимый контент:"
-                    response = `<div class="timeline__item">
-                        <div class="timeline__item-header">
-                            <span id="item1-name" class="timeline__meta">
-                                <strong class="timeline__title">Недопустимые слова</strong>
-                            </span>
-                            <button class="timeline__arrow" type="button" id="item1" aria-labelledby="item1-name" aria-expanded="false" aria-controls="item1-ctrld" aria-haspopup="true" data-item="1">
-                                <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                                    <use href="#arrow" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="timeline__item-body" id="item1-ctrld" role="region" aria-labelledby="item1" aria-hidden="true">
-                            <div class="timeline__item-body-content" id="response">
-                                <p class="timeline__item-p"">${text}<p>
-                                ${response}
+                if (document.getElementsByName('inventor')[0].checked){
+                    if (data['non-lexicon']){
+                        if(!data['video']){
+                            for (let i = 0; i < data['response'].length; i++){
+                            response += `<p class="timeline__item-p"><span class="bold_span">${data['response'][i][0]}</span> - ${data['response'][i][2]}<p>`;
+                            }
+                            
+                            response = `<div class="timeline__item">
+                            <div class="timeline__item-header">
+                                <span id="item1-name" class="timeline__meta">
+                                    <strong class="timeline__title">Недопустимые слова</strong>
+                                </span>
+                                <button class="timeline__arrow" type="button" id="item1" aria-labelledby="item1-name" aria-expanded="false" aria-controls="item1-ctrld" aria-haspopup="true" data-item="1">
+                                    <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+                                        <use href="#arrow" />
+                                    </svg>
+                                </button>
                             </div>
-                        </div>
-                    </div>`
-                } 
+                            <div class="timeline__item-body" id="item1-ctrld" role="region" aria-labelledby="item1" aria-hidden="true">
+                                <div class="timeline__item-body-content" id="response">
+                                    <p class="timeline__item-p"">Содержит недопустимые слова<p>
+                                    ${response}
+                                </div>
+                            </div>
+                        </div>`
+                        }
+                        
+                    } else {
+                        response = `<div class="timeline__item">
+                            <div class="timeline__item-header">
+                                <span id="item1-name" class="timeline__meta">
+                                    <strong class="timeline__title">Видео не содержит недопустимых слов</strong>
+                                </span>
+                                
+                            </div>
+                        </div>`
+                        response += `<div class="timeline__item">
+                            <div class="timeline__item-header">
+                                <span id="item1-name" class="timeline__meta">
+                                    <strong class="timeline__title">${data['video']}</strong>
+                                </span>
+                            </div>
+                        </div>`
+                    }
+                    
+                
+                }else {
+                        response = `<div class="timeline__item">
+                            <div class="timeline__item-header">
+                                <span id="item1-name" class="timeline__meta">
+                                    <strong class="timeline__title">${data['video']}</strong>
+                                </span>
+                            </div>
+                            
+                        </div>`
+                    
+                }
                 
 
                 document.getElementById('timeline').innerHTML = response
@@ -439,7 +471,6 @@
             })
             .catch((error) => {
                 console.error('Error:', error);
-                document.getElementById('timeline').innerText = 'Error: ' + error;
             });
             
         });

@@ -1,8 +1,10 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, send_from_directory
 import getTitle 
 import getSubtitles
 import analyseWordsTitle
 import analyseWordsSub
+from flask import jsonify
+import classif
 
 app = Flask(__name__)
 
@@ -32,8 +34,15 @@ def handle_data():
             return jsonify(response)
         response = {"response": "Видео не содержит негативного контента", "status": False, "non-lexicon":False}
         return jsonify(response)
-    else: 
-        pass
+    else:
+        show = classif.analyse(data['link'])
+        if show:
+            response = {"response": "Видео не содержит ненормативной лексики", "video": "видео содержит сцены курения", "status": False, "non-lexicon":False}
+        else:
+            response = {"response": "Видео не содержит ненормативной лексики", "video": "видео не содержит сцены курения", "status": False, "non-lexicon":False}
+        return jsonify(response)
+
+    
 
 if __name__ == "__main__":
     app.run(port=8000)

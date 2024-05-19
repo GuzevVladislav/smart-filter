@@ -26,5 +26,3 @@ def analyse(tuple):
     if response:
         return response, True
     return "d", False
-
-
